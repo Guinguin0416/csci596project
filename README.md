@@ -57,7 +57,8 @@ The results of the simulation are output in the `output.xyz` file, which records
 
 ### Animation
 An animation of the simulation is provided in the repository (in `.mov` format). This animation illustrates the dynamic evolution of the particle system.
-![Simulation Snapshot](https://drive.google.com/file/d/10MRF2D4MAsGQ5vzQ6oSa0AKr1fqTnQNF/view?usp=drive_link)
+
+<img src="/Task3_AnimatePMD/pngs/untitled.00001.png" width="300" height="300">
 
 ### Discussion
 The animation of the `pmd.c` simulation offers critical insights into the molecular dynamics of particles interacting via the Lennard-Jones potential. This visualization is instrumental in understanding several key aspects:
