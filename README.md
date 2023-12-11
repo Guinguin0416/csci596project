@@ -1,6 +1,79 @@
 # Final Project: Visualizing Simulations (Extending Assignment 7)
 
-## Task 3: Animate parallel MD code `pmd.c`
+## 🔸Task2: Implementing Color-Coding of Atoms by Velocity in Molecular Dynamics Simulation
+
+### Objective
+To enhance the molecular dynamics (MD) simulation visualization by color-coding atoms based on their 3D velocities, mapping these to RGB colors.
+
+### Overview of Current Implementation
+The current implementation comprises two main components:
+1. **MD Simulation (`md.c`)**: Handles the computation of forces, velocities, and positions of atoms.
+2. **Visualization (`atomv.c`)**: Uses OpenGL for rendering the atoms.
+
+### Proposed Modifications
+1. **Data Structure Update**:
+   - Ensure the atom data structure includes velocity components (Vx, Vy, Vz).
+
+2. **Normalize Velocities in `md.c`**:
+   - After calculating velocities, normalize them to a 0-1 range.
+   - Code snippet for normalization (to be added after velocity computation):
+     ```c
+     // Normalize velocity components
+     double max_velocity = 1.0; // Adjust as needed based on the simulation
+     for (int i = 0; i < num_atoms; i++) {
+         atoms[i].vx /= max_velocity;
+         atoms[i].vy /= max_velocity;
+         atoms[i].vz /= max_velocity;
+     }
+     ```
+
+3. **Pass Velocities to Visualization**:
+   - Ensure normalized velocities are accessible in `atomv.c`.
+
+4. **Update Visualization in `atomv.c`**:
+   - Use velocity components as RGB values.
+   - Modify the atom rendering code to set the color based on velocity.
+     ```c
+     // Example of setting atom color based on velocity
+     glColor3f(atoms[i].vx, atoms[i].vy, atoms[i].vz);
+     ```
+
+5. **Optional: Dynamic Velocity Scaling**:
+   - Implement dynamic scaling to adjust the color intensity based on the range of velocities.
+
+### Compilation and Execution Instructions
+1. **Compile the Code**:
+   - Use a C compiler (like gcc) to compile the modified `md.c` and `atomv.c`.
+   - Example:
+     ```bash
+     gcc -o md md.c -lm -lGL -lGLU -lglut
+     gcc -o atomv atomv.c -lm -lGL -lGLU -lglut
+     ```
+
+2. **Run the Simulation**:
+   - Execute the MD simulation program (`md`) and then the visualization program (`atomv`).
+   - Example:
+     ```bash
+     ./md < md.in
+     ./atomv
+     ```
+
+### Testing and Validation
+- Test the modified program with different input data to ensure the color mapping accurately reflects the velocities.
+
+### Conclusion
+These modifications will enable a visually intuitive representation of atom velocities in the MD simulation, enhancing the understanding of dynamic processes.
+
+---
+
+
+
+
+
+
+
+
+## 🔸Task 3: Animate parallel MD code `pmd.c`
 
 ### Introduction
 This repository contains the source code and related files for a parallel molecular dynamics (MD) simulation of Lennard-Jones systems using the Message Passing Interface (MPI) standard. The primary objective of this project is to simulate the dynamic behavior of particles under the influence of Lennard-Jones potential and to analyze the system's evolution over time.
