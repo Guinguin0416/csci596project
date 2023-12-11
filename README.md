@@ -166,7 +166,7 @@ To expand the capability of our OpenGL-based molecular dynamics simulation visua
 
 $\sigma_i^{\alpha\beta} = \frac{N}{\Omega} \left( v_i^{\alpha}v_i^{\beta} + \frac{1}{2} \sum_{j(\neq i)} r_{ij}^{\alpha} r_{ij}^{\beta} \left( -\frac{1}{r} \frac{du}{dr} \right)_{r=r_{ij}} \right) \quad (\alpha, \beta = x, y, z)$, 
 
-where *N* is the total number of atoms, $W=L_xL_yL_z$ is the volume of the simulation box, $r^{\alpha\beta}_{i}$ is the ${\alpha}$-th component of the vector $r_{ij} = r_i − r_j$ , and $u(r)$ is the is the Lennard-Jones potential function.
+where *N* is the total number of atoms, W=L<sub>x</sub>L<sub>y</sub>L<sub>z</sub> is the volume of the simulation box, r<sup>&alpha;&beta;</sup><sub>i</sub>  is the ${\alpha}$-th component of the vector r<sub>ij</sub> = r<sub>i</sub> − r<sub>j</sub> , and u (r) is the is the Lennard-Jones potential function.
 
 ### Current Implementation
 
