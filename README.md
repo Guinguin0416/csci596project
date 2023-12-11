@@ -162,12 +162,14 @@ In conclusion, the animation of the `pmd.c` simulation is not just a visual aid 
 
 ### Objective
 
-To expand the capability of our OpenGL-based molecular dynamics simulation visualization program, atomv.c, we integrated a new feature that allows for color-coding of the 3x3 stress vector of the i-th atom (i = 0, ..., N-1)
+To expand the capability of our OpenGL-based molecular dynamics simulation visualization program, atomv.c, we integrated a new feature that allows for color-coding of the 3x3 stress vector of the i-th atom (i = 0, ..., N-1): 
 
-$$
-\sigma_i^{\alpha\beta} = \frac{N}{\Omega} \left( v_i^{\alpha}v_i^{\beta} + \frac{1}{2} \sum_{j(\neq i)} r_{ij}^{\alpha} r_{ij}^{\beta} \left( -\frac{1}{r} \frac{du}{dr} \right)_{r=r_{ij}} \right) \quad (\alpha, \beta = x, y, z)
-$$
-where N is the total number of atoms, W=L<sub>x</sub>L<sub>y</sub>L<sub>z</sub> is the volume of the simulation box, r<sup>&alpha;&beta;</sup><sub>i</sub>  is the ${\alpha}$-th component of the vector r<sub>ij</sub> = r<sub>i</sub> − r<sub>j</sub> , and u (r) is the is the Lennard-Jones potential function.
+<div align="center">
+    <img src="/Task4_VisualizeStressVector/formula.png" width="400">
+</div>
+
+
+where N is the total number of atoms, W=L<sub>x</sub>L<sub>y</sub>L<sub>z</sub> is the volume of the simulation box, r<sup>&alpha;&beta;</sup><sub>i</sub>  is the ${\alpha}$-th component of the vector r<sub>ij</sub> = r<sub>i</sub> − r<sub>j</sub> , and u(r) is the is the Lennard-Jones potential function.
 
 ### Current Implementation
 
