@@ -164,9 +164,9 @@ In conclusion, the animation of the `pmd.c` simulation is not just a visual aid 
 
 To expand the capability of our OpenGL-based molecular dynamics simulation visualization program, atomv.c, we integrated a new feature that allows for color-coding of the 3x3 stress vector of the i-th atom (i = 0, ..., N-1),
 
-$$\sigma_i^{\alpha\beta} = \frac{N}{\Omega} \left( v_i^{\alpha}v_i^{\beta} + \frac{1}{2} \sum_{j(\neq i)} r_{ij}^{\alpha} r_{ij}^{\beta} \left( -\frac{1}{r} \frac{du}{dr} \right)_{r=r_{ij}} \right) \quad (\alpha, \beta = x, y, z)$$, 
+$\sigma_i^{\alpha\beta} = \frac{N}{\Omega} \left( v_i^{\alpha}v_i^{\beta} + \frac{1}{2} \sum_{j(\neq i)} r_{ij}^{\alpha} r_{ij}^{\beta} \left( -\frac{1}{r} \frac{du}{dr} \right)_{r=r_{ij}} \right) \quad (\alpha, \beta = x, y, z)$, 
 
-where *N* is the total number of atoms, $W=L_xL_yL_z$ is the volume of the simulation box, $r^{\alpha\beta}_{i}$ is the $\alpha$-th component of the vector $r_{ij} = r_i − r_j$ , and u(r) is the is the Lennard-Jones potential function.
+where *N* is the total number of atoms, $W=L_xL_yL_z$ is the volume of the simulation box, $r^{\alpha\beta}_{i}$ is the ${\alpha}$-th component of the vector $r_{ij} = r_i − r_j$ , and $u(r)$ is the is the Lennard-Jones potential function.
 
 ### Current Implementation
 
@@ -177,11 +177,11 @@ The current implementation comprises two main components:
 
 ### Proposed Modifications
 
-1. Data Structure Update:
+1. **Data Structure Update**:
 
    - [...]
 
-2. Simulation Update
+2. **Simulation Update**
 
    - [...]
 
@@ -191,11 +191,11 @@ The current implementation comprises two main components:
      // TODO
      ```
 
-3. Pass [...] to Visualization:
+3. **Pass [...] to Visualization**:
 
    - [...]
 
-4. Update Visualization in `atomv.c`:
+4. **Update Visualization in `atomv.c`**:
 
    - [...]
 
@@ -207,7 +207,7 @@ The current implementation comprises two main components:
 
 ### Compilation and Execution Instructions
 
-1. Compile the Code:
+1. **Compile the Code**:
 
    - Use a C compiler (like gcc) to compile the modified `md.c` and `atomv.c`.
 
@@ -218,7 +218,7 @@ The current implementation comprises two main components:
      gcc -o atomv atomv.c -lm -lGL -lGLU -lglut
      ```
 
-2. Run the Simulation:
+2. **Run the Simulation**:
 
    - Execute the MD simulation program (`md`) and then the visualization program (`atomv`).
 
@@ -229,12 +229,8 @@ The current implementation comprises two main components:
      ./atomv
      ```
 
-### Results
-
-An recording of the simulation is provided in the repository (in `.mov` format), in which we visualizes the 3x3 stress tensor of each atom in the existing OpenGL visualization program.
-
 ### Conclusion
 
-This project stands as a testament to the potential of applying visualization techniques on more  sophisticated computational physics models. By color-coding 3x3 stress tensor of individual atoms, we improves the visual interpretability of complex stress interactions at the atomic level, thereby enabling a more intuitive understanding of molecular dynamics. 
+By color-coding 3x3 stress tensor of individual atoms, we improves the visual interpretability of complex stress interactions at the atomic level, thereby enabling a more intuitive understanding of molecular dynamics.  This project stands as a testament to the potential of integrating visualization techniques with more sophisticated computational physics models. 
 
-As we look to the future, we anticipate that potential development could include real-time manipulation of visualization parameters, integration with other molecular dynamics software, and expanding the capability to handle larger and more complex systems.
+As we look to the future, we anticipate that potential avenues for development could include real-time manipulation of visualization parameters, integration with other molecular dynamics software, and expanding the capability to handle larger and more complex systems.
