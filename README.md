@@ -229,11 +229,12 @@ To expand the capability of our OpenGL-based molecular dynamics simulation visua
 1. **Compute the 3 x 3 stress tensor of each atom at every timestamp.**
 
    - 3 x 3 stress vector of the the i-th atom (i = 0, ..., N-1) can be represented as: 
-   <img src="Task4_ColorCodeStress/figures/formula.png" alt="3x3 stress tensor" width="400" />, 
+   <img src="Task4_ColorCodeStress/figures/formula.png" alt="3x3 stress tensor" width="400" />
+
    , where N is the total number of atoms, W=L<sub>x</sub>L<sub>y</sub>L<sub>z</sub> is the volume of the simulation box, r<sup>&alpha;&beta;</sup><sub>i</sub>  is the &alpha;-th component of the vector r<sub>ij</sub> = r<sub>i</sub> − r<sub>j</sub> , and u(r) is the is the Lennard-Jones potential function
    
    - Example stress vector being calculated:
-   <img src="Task4_ColorCodeStress/figures/stress_vector.png" alt="calculared stress vector" width="500"/>
+      <img src="Task4_ColorCodeStress/figures/stress_vector.png" alt="calculared stress vector" width="500"/>
 
    - Code Snippet:
       ```c
@@ -244,8 +245,6 @@ To expand the capability of our OpenGL-based molecular dynamics simulation visua
          ComputeStressTensor();  /* function that computes the 3x3 stress tensor */
          }
       ```
-
-   
 
 2. **Calculate the Von Mises Stress of each atom.** 
 
@@ -269,7 +268,7 @@ To expand the capability of our OpenGL-based molecular dynamics simulation visua
    - Implemented a function that maps the stress tensor magnitude to a color. 
 
    - Inspired by the color scale commonly used by finite element analysis software such as Ansys
-   <img src="Task4_ColorCodeStress/figures/color_scales.png" alt="color_scales" width="150"/>
+      <img src="Task4_ColorCodeStress/figures/color_scales.png" alt="color_scales" width="150"/>
 
    - Code snippet:
      ```c
