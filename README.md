@@ -222,78 +222,159 @@ In conclusion, the animation of the `pmd.c` simulation is not just a visual aid 
 
 ### Objective
 
-To expand the capability of our OpenGL-based molecular dynamics simulation visualization program, atomv.c, we integrated a new feature that allows for color-coding of the 3x3 stress vector of the i-th atom (i = 0, ..., N-1): 
+To expand the capability of our OpenGL-based molecular dynamics simulation visualization program, mtv.c, we integrated a new feature that allows for color-coding of stress values of the atoms.
+
+### Implementation
+
+3 x 3 stress vector of the the i-th atom (i = 0, ..., N-1) can be represented as 
 
 <div align="center">
-    <img src="/Task4_VisualizeStressVector/formula.png" width="400">
+    <img src="/Task4_ColorCodeStress/figures/formula.png" width="400">
 </div>
 
 
 where N is the total number of atoms, W=L<sub>x</sub>L<sub>y</sub>L<sub>z</sub> is the volume of the simulation box, r<sup>&alpha;&beta;</sup><sub>i</sub>  is the &alpha;-th component of the vector r<sub>ij</sub> = r<sub>i</sub> − r<sub>j</sub> , and u(r) is the is the Lennard-Jones potential function.
 
-### Current Implementation
+To visualize stress values of the atoms in mtv.c, we made the following updates:
 
-The current implementation comprises two main components:
+1. **Calulate the 3 x 3 Stress Tensor of Each Atom:** Implement a function that calculates the stress tensor for each atom at every timestep.
 
-1. MD Simulation (`md.c`): Handles the computation of forces, velocities, and positions of atoms.
-2. Visualization (`atomv.c`): Uses OpenGL for rendering the atoms.
+   <div align="center">
+       <img src="/Task4_ColorCodeStress/figures/stress_vector.png" width="400">
+   </div>
 
-### Proposed Modifications
+   ```c
+   void SingleStep() {
+   	int n,k;
+   	HalfKick(); /* First half kick to obtain v(t+Dt/2) */
+   	for (n=0; n<nAtom; n++) /* Update atomic coordinates to r(t+Dt) */
+   		for (k=0; k<3; k++) r[n][k] = r[n][k] + DeltaT*rv[n][k];
+   	ApplyBoundaryCond();
+   	ComputeAccel(); /* Computes new accelerations, a(t+Dt) */
+   	HalfKick(); /* Second half kick to obtain v(t+Dt) */
+     ComputeStressTensor();
+   }
+   
+   void animate() { /* Callback function for idle events */
+       /* Keep updating the scene until the last MD step is reached */
+       if (stepCount <= StepLimit) {
+           SingleStep(); /* One MD-step integration */
+           if (stepCount%StepAvg == 0) EvalProps(); 
+           makeCurframeGeom(); /* Redraw the scene (make a display list) */
+           glutPostRedisplay(); 
+           ++stepCount;
+       }
+   }
+   ```
 
-1. **Data Structure Update**:
+   ### 
 
-   - [...]
+2. **Calculate Von Mises Stress of Each Atom:** Implement a function that calculates the Von Mises Stress (aka. stress tensor magnitude) for each atom at every timestep.
 
-2. **Simulation Update**
+   ```c
+   double CalculateStressMagnitude(double stressTensor[3][3]) {
+       double magnitude = 0.0;
+       for (int i = 0; i < 3; ++i) {
+           for (int j = 0; j < 3; ++j) {
+               magnitude += stressTensor[i][j] * stressTensor[i][j];
+           }
+       }
+       return sqrt(magnitude);
+   }
+   ```
 
-   - [...]
+3. **Map Stress Tensor Magnitude to Colors:** Implement a function that maps the stress tensor magnitude to a color. 
 
-   - Code snippet:
+   ```c
+   void MapStressToColor(double magnitude, float color[3]) {
+   
+       // normalize the magnitude to [0, 1]
+       int minStress = 0.0;
+       int maxStress = 60.0; 
+       double normalizedStress = (magnitude - minStress) / (maxStress - minStress);
+   
+       if (normalizedStress < 0.25) {
+           // blue to cyan
+           color[0] = 0.0; 
+           color[1] = 4 * normalizedStress;
+           color[2] = 1.0; 
+       } else if (normalizedStress < 0.5) {
+           // cyan to green
+           color[0] = 0.0;
+           color[1] = 1.0; 
+           color[2] = 1.0 - 4 * (normalizedStress - 0.25);
+       } else if (normalizedStress < 0.75) {
+           // green to yellow
+           color[0] = 4 * (normalizedStress - 0.5); 
+           color[1] = 1.0;
+           color[2] = 0.0;
+       } else {
+           // yellow to red
+           color[0] = 1.0; 
+           color[1] = 1.0 - 4 * (normalizedStress - 0.75); 
+           color[2] = 0.0; 
+       }
+   }
+   ```
 
-     ```c
-     // TODO
-     ```
+4. **Render Atoms with Color Coding:** Within the rendering loop, update the color for each atom as determined by magnitude of the stress.
 
-3. **Pass [...] to Visualization**:
-
-   - [...]
-
-4. **Update Visualization in `atomv.c`**:
-
-   - [...]
-
-   - Code snippet:
-
-     ```c
-     // TODO
-     ```
+   ```c
+   void makeAtoms() {
+     int i;
+     float color[3];
+     glNewList(atomsid, GL_COMPILE);
+     for (i=0; i < nAtom; i++) {
+       // map stress to color
+       double magnitude = CalculateStressMagnitude(stressTensor[i]);
+       MapStressToColor(magnitude, color);
+       // draw sphere
+       glPushMatrix();
+       glTranslatef(r[i][0],r[i][1],r[i][2]);
+       glColor3f(color[0], color[1], color[2]);
+       glCallList(sphereid);
+       glPopMatrix();
+     }
+     glEndList();
+   }
+   
+   void makeCurframeGeom() {
+     makeAtoms();
+   }
+   
+   void animate() { /* Callback function for idle events */
+       /* Keep updating the scene until the last MD step is reached */
+       if (stepCount <= StepLimit) {
+           SingleStep(); /* One MD-step integration */
+           if (stepCount%StepAvg == 0) EvalProps(); 
+           makeCurframeGeom(); /* Redraw the scene (make a display list) */
+           glutPostRedisplay(); 
+           ++stepCount;
+       }
+   }
+   ```
 
 ### Compilation and Execution Instructions
 
 1. **Compile the Code**:
 
-   - Use a C compiler (like gcc) to compile the modified `md.c` and `atomv.c`.
+   Go to Task4_ColorCodeStress folder, run the following command:
 
-   - Example:
-
-     ```bash
-     gcc -o md md.c -lm -lGL -lGLU -lglut
-     gcc -o atomv atomv.c -lm -lGL -lGLU -lglut
-     ```
+   ```bash
+   cc -o mdv mdv.c -framework OpenGL -framework GLUT -w
+   ```
 
 2. **Run the Simulation**:
 
-   - Execute the MD simulation program (`md`) and then the visualization program (`atomv`).
+   ```bash
+   ./mdv < md.in
+   ```
 
-   - Example:
-
-     ```bash
-     ./md < md.in
-     ./atomv
-     ```
+## Simulation Result:
+<div align="center">
+    <img src="/Task4_ColorCodeStress/simultaion_result.gif" width="400">
+</div>
 
 ### Conclusion
 
-By color-coding 3x3 stress tensor of individual atoms, we improves the visual interpretability of complex stress interactions at the atomic level, thereby enabling a more intuitive understanding of molecular dynamics.  This project stands as a testament to the potential of integrating visualization techniques with more sophisticated computational physics models. 
-
-As we look to the future, we anticipate that potential avenues for development could include real-time manipulation of visualization parameters, integration with other molecular dynamics software, and expanding the capability to handle larger and more complex systems.
+By color-coding stress tensor of individual atoms, we improves the visual interpretability of complex stress interactions at the atomic level, thereby enabling a more intuitive understanding of molecular dynamics. This project stands as a testament to the potential of integrating visualization techniques with more sophisticated computational physics models. 
