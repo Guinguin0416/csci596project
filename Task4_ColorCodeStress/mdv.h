@@ -65,3 +65,5 @@ float up[3];              /* up direction for camera */
 // final project implementation
 double stressTensor[NMAX][3][3]; /* Stress tensor for each atom */
 double stressTensorMagnitude[NMAX]; /* Magnitude of stress tensor for each atom */
+int minStress = 0.0;
+int maxStress = 60.0; 

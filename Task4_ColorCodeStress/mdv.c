@@ -264,8 +264,6 @@ void PrintStressTensorMagnitude() {
 void MapStressToColor(double magnitude, float color[3]) {
 
     // normalize the magnitude to [0, 1]
-    int minStress = 0.0;
-    int maxStress = 60.0; 
     double normalizedStress = (magnitude - minStress) / (maxStress - minStress);
 
     if (normalizedStress < 0.25) {
