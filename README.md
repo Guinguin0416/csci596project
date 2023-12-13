@@ -18,7 +18,7 @@ Assigning Initial Temperatures: Initially, the atoms on one side of the cube (sa
 Load the Structure File: Open VMD, go to File > New Molecule, and load your molecular structure file.
 
 **Step 3: Running a Molecular Dynamics Simulation (Hard)**
-Simulation Software: VMD is primarily a visualization tool. To simulate the temperature equilibration, you'll need to use molecular dynamics software like NAMD, GROMACS, or LAMMPS.
+Simulation Software: VMD is primarily a visualization tool. To simulate the temperature equilibration, you'll need to use molecular dynamics software like NAMD, GROMACS, or LAMMPS. In this case, I use LAMMPS for the simulation.
 
 Prepare the Simulation: Set up the MD simulation with your molecular structure file. Define the simulation box, periodic boundary conditions, and the initial velocities corresponding to the different temperatures on each side of the cube.
 
