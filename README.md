@@ -1,5 +1,39 @@
 # Final Project: Visualizing Simulations (Extending Assignment 7)
 
+## 🔸Task1: Implementing Color-coding the atoms with their kinetic-energy values
+
+### Objective
+Color-coding the atoms with their kinetic-energy values. (A nice visual demonstration of thermal equilibration may be obtained by initializing half the MD box at a high temperature and the other half at a low temperature and observing how these temperatures will equilibrate.)
+Step 1: Preparing the Molecular Structure File
+Create a Molecular Structure File: First, you need a file that represents the molecular structure of the argon atoms. This can be a simple text file (like a PDB or XYZ file) listing the positions of the argon atoms in a cube.
+
+### Implementations
+**Step 1: Preparing the Molecular Structure File**
+For a cube, you'll need to define the positions of 10 argon atoms: 5 on each side.
+You can arrange them in a 2x2x2 cube with two extra atoms on one side.
+Assigning Initial Temperatures: Initially, the atoms on one side of the cube (say, the left side) will be at a lower temperature compared to the right side. You can simulate this by assigning lower initial velocities to the atoms on the left side in your molecular dynamics (MD) simulation setup.
+
+**Step 2: Setting Up VMD**
+
+Load the Structure File: Open VMD, go to File > New Molecule, and load your molecular structure file.
+
+**Step 3: Running a Molecular Dynamics Simulation (Hard)**
+Simulation Software: VMD is primarily a visualization tool. To simulate the temperature equilibration, you'll need to use molecular dynamics software like NAMD, GROMACS, or LAMMPS.
+
+Prepare the Simulation: Set up the MD simulation with your molecular structure file. Define the simulation box, periodic boundary conditions, and the initial velocities corresponding to the different temperatures on each side of the cube.
+
+Run the Simulation: Perform the simulation allowing the system to reach thermal equilibrium. This will produce a trajectory file that contains the positions of atoms over time.
+
+**Step 4: Visualizing the Simulation in VMD**
+Load the Trajectory File: Once the simulation is done, load the resulting trajectory file into VMD.
+
+Create a Visualization: In VMD, you can use different graphical representations to visualize the atoms and their motions. For example, you can use spheres to represent argon atoms and color them based on their velocity or kinetic energy to indicate temperature.
+
+Analyzing the Transition: You can create animations showing the transition from the initial state (with a temperature gradient) to the final state (thermal equilibrium). This can be done by stepping through the trajectory frames in VMD.
+
+Rendering: Finally, you can render high-quality images or animations using VMD's built-in rendering tools or external renderers like Tachyon.
+
+
 ## 🔸Task2: Implementing Color-Coding of Atoms by Velocity in Molecular Dynamics Simulation
 
 ### Objective

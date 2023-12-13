@@ -1,0 +1,18 @@
+# LAMMPS Input Script Example
+
+units lj
+atom_style atomic
+read_data Task1_ColorKE/lammps_initial_data.txt
+
+pair_style lj/cut 2.5
+pair_coeff 1 1 1.0 1.0
+
+fix 1 all nve
+
+# Initialize velocities
+velocity all create 300.0 12345 mom yes rot no dist gaussian
+
+# Output a .dcd file for VMD
+dump 1 all dcd 1000 output.dcd
+
+run 10000
