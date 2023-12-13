@@ -32,7 +32,8 @@ Create a Visualization: In VMD, you can use different graphical representations 
 Analyzing the Transition: You can create animations showing the transition from the initial state (with a temperature gradient) to the final state (thermal equilibrium). This can be done by stepping through the trajectory frames in VMD.
 
 Rendering: Finally, you can render high-quality images or animations using VMD's built-in rendering tools or external renderers like Tachyon.
-
+### Simulation Result
+<img src="Task1_ColorKE/results.gif" alt="simulation result" width="300"/>
 
 ## 🔸Task2: Implementing Color-Coding of Atoms by Velocity in Molecular Dynamics Simulation
 
